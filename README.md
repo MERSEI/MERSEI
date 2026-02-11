@@ -4,7 +4,7 @@
 
 **Middle Full-Stack Developer · AI-Augmented Workflows · Team Lead**
 
-[![Location](https://img.shields.io/badge/📍_Ostrava-Czech_Republic-0078D4?style=for-the-badge)](https://github.com/MERSEI)
+[![Location](https://img.shields.io/badge/📍_Praha-Czech_Republic-0078D4?style=for-the-badge)](https://github.com/MERSEI)
 [![Status](https://img.shields.io/badge/🟢_Status-Open_to_Work-22c55e?style=for-the-badge)](https://github.com/MERSEI)
 [![Rate](https://img.shields.io/badge/💼_Rate-€3k--4k%2Fmo_|_$30--40%2Fhr-f97316?style=for-the-badge)](https://github.com/MERSEI)
 
