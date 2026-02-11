@@ -62,7 +62,7 @@ I'm a Middle Full-Stack Developer who **delivers in hours what traditionally tak
 - **Stack:** Python, aiogram, PostgreSQL, SQLite
 
 ### ⚡ Full-Stack Developer — Various Commercial Projects
-**Freelance · 2023–Present**
+**Freelance · 2022–Present**
 - **PinScraper** — Pinterest data extraction platform with anti-detection mechanisms and proxy rotation
 - **Telegram Automation Bots** — user auth, payment processing, admin panels, API integrations
 - **Frontend Projects** — responsive web apps, modern UI/UX, API integrations
