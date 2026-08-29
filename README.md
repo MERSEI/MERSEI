@@ -107,7 +107,7 @@ you through why it's built that way and what I'd change — that's the part wort
 
 - 📧 aleksfialko15@gmail.com
 - 💼 LinkedIn: [Alex Fialko](https://www.linkedin.com/in/alex-fialko-2a0275356)
-- 🌐 Portfolio: [portfolio-merseis-projects.vercel.app](https://portfolio-merseis-projects.vercel.app)
+- 🌐 Portfolio: [portfolio-chi-sepia-jfbw53mb9i.vercel.app](https://portfolio-chi-sepia-jfbw53mb9i.vercel.app)
 - 🕐 CET · 🗣 EN fluent · RU/UA native · CZ basic
 
 *Open to remote Full-Stack / AI engineering roles and contract projects.*
