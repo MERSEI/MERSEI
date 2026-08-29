@@ -18,42 +18,74 @@ technical specs, scoping and pricing projects, and running client communication 
 ## Tech Stack
 
 **Frontend:** React · Next.js · TypeScript · JavaScript · Vite · Tailwind · HTML5/CSS3
-**Backend:** Python · Node.js · Express · FastAPI · aiogram · REST · WebSocket · JWT
-**Databases:** PostgreSQL · SQLite · MongoDB · Prisma · pgvector
-**AI:** OpenAI API · Anthropic Claude · Google Gemini · MCP servers
-**Tools & Deploy:** Docker · Vercel · Railway · GitHub Actions · Git · S3
+**Backend:** Python · Node.js · Express · FastAPI · Fastify · aiogram · grammY · REST · WebSocket · JWT
+**Data & queues:** PostgreSQL · pgvector · SQLite · Redis · BullMQ · ARQ · Prisma · Alembic
+**AI:** Anthropic Claude · OpenAI API · Google Gemini · structured outputs · RAG · MCP servers
+**Tools & Deploy:** Docker · Docker Compose · Vercel · Railway · GitHub Actions · Tailscale · Git
 
 ## Featured Projects
 
-- **[LeadRadar](https://github.com/MERSEI/LeadRadar)** — Threads lead pipeline: headless
-  scraping, Gemini relevance scoring, Telegram delivery. A Redis-backed BullMQ queue sits
-  between the stages so the system survives crashes, retries cleanly, and never pays twice
-  to score the same text. `TypeScript · BullMQ · Redis · Playwright · Gemini`
-
 - **[Remote Jobs Hub](https://github.com/MERSEI/remote-jobs-hub)** — vacancy aggregator over
-  Telegram channels: MTProto collector, LLM extraction into structured fields, semantic
-  deduplication with pgvector, FastAPI backend and a Telegram Mini App.
-  `Python · FastAPI · PostgreSQL/pgvector · Alembic`
+  Telegram channels. Six services in one compose file: an MTProto collector reading whitelisted
+  sources only, a rule-based prefilter that drops noise *before* any LLM call, structured-output
+  extraction into normalized fields, and two-layer dedup (exact + semantic via pgvector). Ships
+  to users as a Telegram Mini App with HMAC-verified `initData` auth.
+  `Python · FastAPI · Telethon · ARQ · PostgreSQL/pgvector · Next.js`
 
-- **[Wallet Analytics Dashboard](https://dashboard-bice-rho-61.vercel.app)** — transactions,
-  token flows and balance history for any Ethereum address, built on the Etherscan V2 API.
-  `Next.js · TypeScript · Vitest`
+- **[LeadRadar](https://github.com/MERSEI/LeadRadar)** — Threads lead pipeline: headless
+  scraping, Gemini relevance scoring, Telegram delivery. Two BullMQ queues on Redis sit between
+  the stages, so a Playwright crash doesn't lose scraped posts and a transient 429 doesn't kill
+  the run. Scores are cached by `sha256(post text)` — the same post seen under several keywords
+  costs a Redis `GET`, not a second billed call. `TypeScript · BullMQ · Redis · Playwright · Gemini`
+
+- **[antiTCK](https://github.com/MERSEI/antiTCK)** — anonymous incident-report bot with mandatory
+  human moderation. Every submission is sanitized before publishing — phone numbers, emails,
+  @usernames, URLs, licence plates — and coordinates are rounded to district level. There is no
+  auto-publish path in the codebase; that's an invariant, not a setting.
+  `Node.js 22 · TypeScript · grammY · Prisma · PostgreSQL · Vitest`
 
 - **[crypto-widget](https://github.com/MERSEI/crypto-widget)** — resident desktop widget: a
-  docked pill that expands into a live Binance watchlist with charts and spike alerts.
-  Native window behaviour handled in Rust. `Tauri 2 · React 19 · Rust`
+  docked pill that expands into a live Binance watchlist with charts and spike alerts. Native
+  window behaviour (always-on-top, docking) handled in Rust, because the web layer can't express it.
+  `Tauri 2 · React 19 · Rust`
+
+- **[TON Testnet Wallet](https://github.com/MERSEI/Ton-testnet)** — self-custodial TON wallet,
+  Telegram-style UI, live updates over WebSocket. Shipped, then audited: 25 fixes across key
+  handling, input validation and balance-refresh races, with the suite going 78 → 347 tests.
+  `TypeScript · React · Vite · WebSocket · Vitest`
+
+- **[Wallet Analytics Dashboard](https://dashboard-bice-rho-61.vercel.app)** — transactions,
+  token flows and balance history for any Ethereum address on the Etherscan V2 API. A later audit
+  closed a publicly reachable withdraw endpoint and took tests from 0 to 175.
+  `Next.js · TypeScript · Vitest`
 
 - **[Data Room MVP](https://acme-data-rooms.vercel.app)** — due-diligence document room:
   nested folders, PDF upload and preview, instant search, IndexedDB persistence, no backend.
   `React 19 · TypeScript · Zustand · Vitest`
 
 - **[AI Integrator — Landing](https://ai-integrator-landing.vercel.app)** — bilingual
-  marketing site with 10 live Gemini-backed tool demos, two-tier Upstash rate limiting and
-  validated email capture. `Next.js 15 · TypeScript · Tailwind · Framer Motion`
+  marketing site with 10 live Gemini-backed tools, two-tier Upstash rate limiting and validated
+  email capture. Tools that need scraping unavailable from serverless are labelled as demos
+  rather than faked. `Next.js 15 · TypeScript · Tailwind · Framer Motion`
 
-More in the repository list: a [TON testnet wallet](https://github.com/MERSEI/Ton-testnet),
-an [AI IDE with a RAG pipeline and NATS-orchestrated agents](https://github.com/MERSEI/Vibe),
-and several production Telegram bots.
+### Selected private work
+
+- **Agent Farm** — hub-and-spoke agent platform: Telegram gateway, Fastify orchestrator, and
+  per-VPS RAG workers. Workspace isolation is enforced by Postgres RLS (`SET LOCAL
+  app.workspace_id`), not by application code; the only public surface is one webhook, everything
+  else listens on a Tailscale mesh, and the model never gets a shell tool.
+  `TypeScript · Fastify · BullMQ · PostgreSQL RLS · Docker · Tailscale`
+
+- **Chronicles** — a text game where the dice are rolled by code, never by the model: the LLM
+  names a skill and difficulty *before* the roll and narrates a result it didn't decide. The
+  deterministic engine has zero dependencies and zero API calls, so balance is debugged for free —
+  500 stubbed runs caught four defects, including one where succeeding at checks made a skilled
+  player die sooner than a random one. `TypeScript · Anthropic API · Vitest`
+
+More in the repository list: an
+[AI IDE with a RAG pipeline and NATS-orchestrated agents](https://github.com/MERSEI/Vibe),
+an [Instagram content-intelligence bot](https://github.com/MERSEI/Tr-Dev) (Whisper + OCR + LLM
+function calling), and several production Telegram bots.
 
 ## Experience
 
